@@ -26,17 +26,18 @@
 package com.ericsson.research.owr.sdk;
 
 
-import android.util.Log;
-
 import com.ericsson.research.owr.DataChannel;
 import com.ericsson.research.owr.DataSession;
 import com.ericsson.research.owr.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class DataStreamHandler extends StreamHandler implements DataSession.OnDataChannelRequestedListener, StreamSet.DataChannelDelegate {
-    private static final String TAG = "DataStreamHandler";
+
+    private static final Logger LOG = LoggerFactory.getLogger(DataStreamHandler.class);
 
     private static final int BASE_PORT = 5000;
 
@@ -159,7 +160,7 @@ class DataStreamHandler extends StreamHandler implements DataSession.OnDataChann
 
     @Override
     public void onDataChannelRequested(boolean ordered, int max_packet_life_time, int max_retransmits, String protocol, boolean negotiated, int id, String label) {
-        Log.d(TAG, "DATACHANNEL requested:" +
+        LOG.debug("DATACHANNEL requested:" +
                 " ordered=" + ordered +
                 " max_packet_life_time=" + max_packet_life_time +
                 " max_retransmits=" + max_retransmits +
@@ -180,7 +181,7 @@ class DataStreamHandler extends StreamHandler implements DataSession.OnDataChann
                 }
 
                 if (keep) {
-                    Log.d(TAG, "adding datachannel to session: " + dataChannel);
+                    LOG.debug("adding datachannel to session: " + dataChannel);
                     getDataSession().addDataChannel(dataChannel);
                 }
             }

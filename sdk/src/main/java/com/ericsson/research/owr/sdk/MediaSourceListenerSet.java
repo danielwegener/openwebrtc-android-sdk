@@ -25,10 +25,10 @@
  */
 package com.ericsson.research.owr.sdk;
 
-import android.os.Handler;
-import android.os.Looper;
 
 import com.ericsson.research.owr.MediaSource;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

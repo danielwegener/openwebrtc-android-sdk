@@ -26,7 +26,6 @@
 package com.ericsson.research.owr.sdk;
 
 
-import android.util.Log;
 
 import com.ericsson.research.owr.MediaSession;
 import com.ericsson.research.owr.MediaSource;
@@ -34,11 +33,13 @@ import com.ericsson.research.owr.MediaType;
 import com.ericsson.research.owr.Payload;
 import com.ericsson.research.owr.RemoteMediaSource;
 import com.ericsson.research.owr.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 class MediaStreamHandler extends StreamHandler implements MediaSession.OnIncomingSourceListener, MediaSession.CnameChangeListener, StreamSet.MediaSourceDelegate, MediaSession.SendSsrcChangeListener {
-    private static final String TAG = "MediaStreamHandler";
+    private static final Logger LOG = LoggerFactory.getLogger(MediaStreamHandler.class);
     private boolean mShouldRespectRemotePayloadOrder;
     private List<RtcPayload> mDefaultPayloads;
 
@@ -107,7 +108,7 @@ class MediaStreamHandler extends StreamHandler implements MediaSession.OnIncomin
         }
         List<Payload> transformedPayloads = Utils.transformPayloads(payloads, getMediaStream().getMediaType());
         if (transformedPayloads.isEmpty()) {
-            Log.w(TAG, "no suitable payload found for stream: " + getMediaStream().getId());
+            LOG.warn("no suitable payload found for stream: " + getMediaStream().getId());
             getStream().setStreamMode(StreamMode.INACTIVE);
             // TODO: stop stream
             return;
@@ -158,7 +159,7 @@ class MediaStreamHandler extends StreamHandler implements MediaSession.OnIncomin
             }
             List<Payload> transformedPayloads = Utils.transformPayloads(payloads, getMediaStream().getMediaType());
             if (transformedPayloads.isEmpty()) {
-                Log.w(TAG, "no suitable payload found for stream: " + getMediaStream().getId());
+                LOG.warn("no suitable payload found for stream: " + getMediaStream().getId());
                 getStream().setStreamMode(StreamMode.INACTIVE);
                 // TODO: stop stream
                 return;
